@@ -1,0 +1,12 @@
+version: '3'
+services:
+  postgresql:
+    image: postgres
+    # volumes:
+    #     - ~/volumes/jhipster/relatorias_sic/postgresql/:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=1234
+      - POSTGRES_HOST_AUTH_METHOD=trust
+    ports:
+      - 5432:5432

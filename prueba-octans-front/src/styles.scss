@@ -1,0 +1,12 @@
+$primary: #03A9F4;
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+::ng-deep .mat-form-field.mat-focused .mat-form-field-outline {
+  color: $primary !important;
+}
+
+::ng-deep .mat-form-field.mat-focused .mat-form-field-label {
+  color: $primary !important;
+}
