@@ -6,6 +6,8 @@ import { IUsuario } from './models/usuario.model';
 import { AppService } from './app.service';
 import { CreateUpdateUsuarioComponent } from './create-update-usuario/create-update-usuario.component';
 import { MatDialog } from '@angular/material/dialog';
+import { Observable } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -20,6 +22,7 @@ export class AppComponent {
   filteredUsers:IUsuario[] = [];
   dataSource = null;
   loadingUsers: boolean = true;
+  filteredOptions: Observable<string[]>;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -29,7 +32,6 @@ export class AppComponent {
   ) { }
 
   ngOnInit(): void {
-    console.log("in")
     this.obtenerUsuarios();
   }
 
@@ -40,12 +42,21 @@ export class AppComponent {
     this.filteredUsers.sort((a,b) => a.id - b.id)
     this.dataSource = new MatTableDataSource<IUsuario>(this.filteredUsers)
     this.dataSource.paginator = this.paginator
-    this.usersNames = this.users.map(user => user.nombre)
+    this.usersNames = this.users.map(user => user.nombre.toLowerCase())
+    this.filteredOptions = this.userSearch.valueChanges.pipe(
+      startWith(''),
+      map(value => this._filter(value)),
+    );
+
     this.loadingUsers = false
   } 
 
+  private _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+    return this.usersNames.filter(username => username.toLowerCase().includes(filterValue));
+  }
+
   cleanSearchBar(): void{
-    console.log("in")
     this.userSearch.reset()
   }
 

@@ -17,8 +17,8 @@
               matInput [formControl]="userSearch" [matAutocomplete]="auto">
             <mat-icon (click)="cleanSearchBar()" class="clean_icon" matSuffix>close</mat-icon>
             <mat-autocomplete #auto="matAutocomplete" (optionSelected)="searchUsuario($event.option)">
-              <mat-option *ngFor="let user of usersNames" [value]="user">
-                {{user}}
+              <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                {{option}}
               </mat-option>
             </mat-autocomplete>
           </mat-form-field>
